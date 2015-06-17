@@ -113,7 +113,7 @@ public class AirpalModule extends AbstractModule
             throws ClassNotFoundException
     {
         final DBIFactory factory = new DBIFactory();
-        final DBI dbi =  factory.build(environment, config.getDataSourceFactory(), "mysql");
+        final DBI dbi =  factory.build(environment, config.getDataSourceFactory(), "postgresql");
         dbi.registerMapper(new TableRow.TableRowMapper(objectMapper));
         dbi.registerMapper(new QueryStoreMapper(objectMapper));
         dbi.registerArgumentFactory(new UUIDArgumentFactory());
