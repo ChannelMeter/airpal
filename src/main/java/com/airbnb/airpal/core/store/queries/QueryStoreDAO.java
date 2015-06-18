@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public abstract class QueryStoreDAO implements QueryStore
 {
-    @SqlQuery("SELECT * FROM saved_queries WHERE user = :userName")
+    @SqlQuery("SELECT * FROM saved_queries WHERE \"user\" = :userName")
     @Override
     public abstract List<SavedQuery> getSavedQueries(@BindBean AirpalUser airpalUser);
 
@@ -26,7 +26,7 @@ public abstract class QueryStoreDAO implements QueryStore
     }
 
     @SqlUpdate(
-            "INSERT INTO saved_queries (query, user, description, uuid, name) " +
+            "INSERT INTO saved_queries (query, \"user\", description, uuid, name) " +
                     "VALUES (:queryWithPlaceholders, :user, :description, :uuid, :name)")
     public abstract int _saveQuery(@RosettaBinder UserSavedQuery query);
 

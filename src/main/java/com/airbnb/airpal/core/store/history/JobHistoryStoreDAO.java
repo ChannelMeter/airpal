@@ -52,7 +52,7 @@ public class JobHistoryStoreDAO
                     "SELECT " +
                             "j.id AS id, " +
                             "j.query AS query, " +
-                            "j.user AS user, " +
+                            "j.user AS \"user\", " +
                             "j.uuid AS uuid, " +
                             "j.queryStats as queryStats, " +
                             "j.state AS state, " +
@@ -68,7 +68,7 @@ public class JobHistoryStoreDAO
                             "jo.description, " +
                             "jo.location " +
                             "FROM (SELECT * FROM jobs " +
-                                "WHERE query_finished > DATE_SUB(UTC_TIMESTAMP(), INTERVAL :day_interval day) " +
+                                "WHERE query_finished > (NOW() - (INTERVAL '1 days' * :day_interval)) " +
                                 "AND " + innerWhereClause + " " +
                                 "ORDER BY query_finished DESC LIMIT :limit) j " +
                             "LEFT OUTER JOIN job_tables jt ON j.id = jt.job_id " +
@@ -124,7 +124,7 @@ public class JobHistoryStoreDAO
     public List<Job> getRecentlyRunForUser(String user, long maxResults)
     {
         try {
-            String usersClause = format("user = '%s'", user);
+            String usersClause = format("\"user\" = '%s'", user);
             return getJobs(maxResults, 1, null, usersClause);
         } catch (Exception e) {
             log.error("Caught exception during getRecentlyRun", e);
@@ -136,7 +136,7 @@ public class JobHistoryStoreDAO
     public List<Job> getRecentlyRunForUser(String user, long maxResults, Iterable<Table> tables)
     {
         try {
-            String usersClause = format("user = '%s'", user);
+            String usersClause = format("\"user\" = '%s'", user);
             String tablesClause = Util.getTableCondition(tables);
             return getJobs(maxResults, 1, tablesClause, usersClause);
         } catch (Exception e) {

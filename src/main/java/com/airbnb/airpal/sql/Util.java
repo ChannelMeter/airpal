@@ -24,7 +24,7 @@ public class Util
         Set<String> tablesUsedByQuery = new HashSet<>(Iterables.size(tables));
         for (Table table : tables) {
             tablesUsedByQuery.add(
-                    format("(connector_id = \"%s\" AND schema_ = \"%s\" AND table_ = \"%s\")",
+                    format("(connector_id = '%s' AND schema_ = '%s' AND table_ = '%s')",
                             DOT_JOINER.join(alias, table.getConnectorId()),
                             DOT_JOINER.join(alias, table.getSchema()),
                             DOT_JOINER.join(alias, table.getTable())));
